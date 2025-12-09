@@ -61,21 +61,21 @@ if st.sidebar.button("Dapatkan Rekomendasi"):
 
     # Retain
     if st.button("Simpan ke Kasus (Retain)"):
-    new_case = {
-        "age": age,
-        "gender": gender,
-        "skin_type": skin_type,
-        "acne": acne,
-        "blackheads": blackheads,
-        "dryness": dryness,
-        "redness": redness,
-        "dark_spots": dark_spots,
-        "aging": aging,
-        "solution": solution
-    }
+        new_case = {
+            "age": age,
+            "gender": gender,
+            "skin_type": skin_type,
+            "acne": acne,
+            "blackheads": blackheads,
+            "dryness": dryness,
+            "redness": redness,
+            "dark_spots": dark_spots,
+            "aging": aging,
+            "solution": solution
+        }
 
-    cbr.retain(new_case)
-    st.success("Kasus baru berhasil disimpan!")
+        cbr.retain(new_case)
+        st.success("Kasus baru berhasil disimpan!")
 
 
 st.sidebar.markdown("---")
