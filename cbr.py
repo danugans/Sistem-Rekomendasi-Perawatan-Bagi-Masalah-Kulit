@@ -5,7 +5,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 
 class CBRSystem:
-    def __init__(self, df: pd.DataFrame):    
+    def __init__(self, df: pd.DataFrame):
         self.df = df.copy().reset_index(drop=True)
         self.feature_cols = [
             "age", "gender", "skin_type",
@@ -17,12 +17,12 @@ class CBRSystem:
     def _prepare_model(self):
         # Prepare feature matrix
         X = self._build_feature_matrix(self.df)
-        self.nn = NearestNeighbors(n_neighbors=5, metric='cosine')
+        self.nn = NearestNeighbors(n_neighbors=5, metric="cosine")
         self.nn.fit(X)
         self.X = X
 
     def _build_feature_matrix(self, df):
-        # Normalize age 0-1
+        # Normalize age
         age = df["age"].astype(float).clip(0, 100).values.reshape(-1, 1) / 100.0
 
         # Encode gender & skin type
@@ -30,7 +30,7 @@ class CBRSystem:
         self.ohe = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
         cat_enc = self.ohe.fit_transform(cat)
 
-        # Numeric symptoms
+        # Symptoms numeric
         symp = df[[
             "acne", "blackheads", "dryness",
             "redness", "dark_spots", "aging"
@@ -62,7 +62,6 @@ class CBRSystem:
         return results
 
     def reuse(self, case: dict):
-        # default: return solution of most similar case
         return case.get("solution", "")
 
     def next_id(self):
@@ -70,15 +69,14 @@ class CBRSystem:
             return int(self.df["id"].max()) + 1
         return len(self.df) + 1
 
-    def retain(self, new_case):
-    # append ke dataframe
-    self.df.loc[len(self.df)] = new_case
+    def retain(self, new_case: dict):
+        # Append ke dataframe
+        self.df.loc[len(self.df)] = new_case
 
-    # simpan ke file
-    self.df.to_csv("cases.csv", index=False)
+        # Simpan ke file
+        self.df.to_csv("cases.csv", index=False)
 
-    # retrain model supaya data baru ikut
-    self._prepare_model()
+        # Retrain model supaya data baru ikut
+        self._prepare_model()
 
-    return True
-
+        return True
