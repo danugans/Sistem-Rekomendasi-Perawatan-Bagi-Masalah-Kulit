@@ -69,3 +69,16 @@ class CBRSystem:
         if "id" in self.df.columns and not self.df["id"].isnull().all():
             return int(self.df["id"].max()) + 1
         return len(self.df) + 1
+
+    def retain(self, new_case):
+    # append ke dataframe
+    self.df.loc[len(self.df)] = new_case
+
+    # simpan ke file
+    self.df.to_csv("cases.csv", index=False)
+
+    # retrain model supaya data baru ikut
+    self._prepare_model()
+
+    return True
+
