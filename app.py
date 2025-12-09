@@ -61,21 +61,22 @@ if st.sidebar.button("Dapatkan Rekomendasi"):
 
     # Retain
     if st.button("Simpan ke Kasus (Retain)"):
-        new_case = {
-            "id": cbr.next_id(),
-            "age": age,
-            "gender": gender,
-            "skin_type": skin_type,
-            "acne": int(acne),
-            "blackheads": int(blackheads),
-            "dryness": int(dryness),
-            "redness": int(redness),
-            "dark_spots": int(dark_spots),
-            "aging": int(aging),
-            "solution": revised,
-        }
-        append_case(DATA_PATH, new_case)
-        st.success("Kasus baru berhasil disimpan (Retain). Dataset diperbarui.")
+    new_case = {
+        "age": age,
+        "gender": gender,
+        "skin_type": skin_type,
+        "acne": acne,
+        "blackheads": blackheads,
+        "dryness": dryness,
+        "redness": redness,
+        "dark_spots": dark_spots,
+        "aging": aging,
+        "solution": solution
+    }
+
+    cbr.retain(new_case)
+    st.success("Kasus baru berhasil disimpan!")
+
 
 st.sidebar.markdown("---")
 st.sidebar.write("Dataset saat ini: %d kasus" % len(df))
