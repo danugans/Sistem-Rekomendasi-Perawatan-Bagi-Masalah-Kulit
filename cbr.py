@@ -5,7 +5,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 
 class CBRSystem:
-    def __init__(self, df: pd.DataFrame):
+    def __init__(self, df: pd.DataFrame):    
         self.df = df.copy().reset_index(drop=True)
         self.feature_cols = [
             "age", "gender", "skin_type",
@@ -27,7 +27,7 @@ class CBRSystem:
 
         # Encode gender & skin type
         cat = df[["gender", "skin_type"]].astype(str)
-        self.ohe = OneHotEncoder(sparse=False, handle_unknown="ignore")
+        self.ohe = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
         cat_enc = self.ohe.fit_transform(cat)
 
         # Numeric symptoms
